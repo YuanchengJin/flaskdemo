@@ -5,18 +5,28 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
         <title>IT@JCU Programming 1 - {% block title %}Flask Demo{% endblock %}</title>
     {% endblock %}
+
+from flask import Flask, render_template
+import datetime
+
+app = Flask(__name__)
+
+@app.context_processor
+def inject_now():
+    return {'current_year': datetime.datetime.now().year}
 </head>
 <body>
 <div id="nav">
     <a href="{{ url_for('home') }}">Home</a> |
-    <a href="{{ url_for('search') }}">Search</a>
+    <a href="{{ url_for('search') }}">Search</a> |
+    <a href="{{ url_for('about') }}">About</a>
 </div>
 <div id="content">
     {% block content %}{% endblock %}
 </div>
 <div id="footer">
     {% block footer %}
-        <p>IT@JCU Flask Demo by Lindsay Ward - <a href="http://github.com/lindsaymarkward/flaskdemo">Original source on GitHub</a>.</p>
+        <p>&copy; {{ current_year }} IT@JCU Flask Demo by Lindsay Ward - <a href="http://github.com/lindsaymarkward/flaskdemo">Original source on GitHub</a>.</p>
     {% endblock %}
 </div>
 </body>
